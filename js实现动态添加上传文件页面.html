@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+    <head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+	</head>
+ 
+<body>
+    <form id="upload" action="${pageContext.request.contextPath }/servlet/FileUploadServlet" enctype="multipart/form-data" method="post">
+        上传文件:<input type="button" value="添加文件" onclick="addFile(this.parentNode)" />
+        <!-- <input type="file" multiple="multiple" id="test"> -->
+        <div class="wrap"></div>
+        <table>
+          <div id="file">
+          </div>
+        </table>
+        <input id="submit" type="submit" value="上传" style="display: none"/>
+      </form>
+</body>
+<script>
+var addFile = function(){
+  var itemStr = '<div class="item">\
+                  <div class="handle">\
+                    <input class="choose" type="file" name="fileName" multiple>\
+                    <button class="del">删除</button>\
+                  </div>\
+                  <div class="text"></div>\
+                 </div>'; 
+  $(".wrap").append(itemStr);
+}
+
+$(document).on('change','.choose',function(){
+  var files = this.files;
+  var text = '';
+  
+  for (var i = 0, len = files.length; i < len; i++) {
+    text += files[i].name + " ";
+  }
+  $(this).parents(".item").find(".text").append(text);
+});
+
+$(document).on('click','.del',function(){
+  $(this).parents(".item").remove();
+});
+</script>
+ 
+</html>
